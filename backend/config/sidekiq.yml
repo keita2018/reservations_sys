@@ -1,0 +1,10 @@
+# config/sidekiq.yml
+:concurrency: 5
+:queues:
+  - [mailers, 2]
+  - default
+
+:schedule:
+  reminder_mail:
+    cron: "0 8 * * *"
+    class: "ReminderMailJob"

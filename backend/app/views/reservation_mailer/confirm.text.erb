@@ -1,0 +1,6 @@
+<!-- app/views/reservation_mailer/confirm.text.erb -->
+<%= @reservation.user.email %> 様
+ご予約ありがとうございます。
+日時: <%= @reservation.reservation_at %>
+人数: <%= @reservation.people_count %>
+コース: <%= @reservation.course.presence || 'なし' %>

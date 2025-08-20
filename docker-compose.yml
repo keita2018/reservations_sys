@@ -1,0 +1,75 @@
+services:
+  backend:
+    container_name: qwik-rails-api
+    build:
+      context: .
+      dockerfile: ./container/backend/Dockerfile
+    command: bash -c "rails s -b '0.0.0.0'"
+    volumes:
+      - ./backend:/usr/src/backend
+    env_file:
+      - .env
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://redis:6379/0        # ← これを追加
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+      - redis
+      - mailhog    # ← 追加
+    tty: true
+    stdin_open: true
+  db:
+    container_name: qwik-postgres-db
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+  frontend:
+    container_name: qwik-frontend
+    build: 
+      context: .
+      dockerfile: ./container/frontend/Dockerfile
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./frontend:/usr/src/frontend
+      - node_modules:/usr/src/frontend/node_modules # node_modules
+    tty: true
+    depends_on:
+      - backend
+  sidekiq:
+    container_name: sidekiq
+    build:
+      context: .
+      dockerfile: ./container/backend/Dockerfile
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    depends_on:
+      - db
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      RAILS_ENV: development              # ← 本番なら production
+    volumes:
+      - ./backend:/usr/src/backend
+    tty: true
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP
+volumes:
+  pg-data:
+  node_modules:

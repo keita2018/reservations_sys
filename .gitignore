@@ -1,0 +1,55 @@
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.orig
+.idea/
+.vscode/
+.eslintcache
+
+# --- Environment / Secrets ---
+.env
+.env.*.local
+frontend/.env
+backend/.env
+!*.example
+config/master.key
+
+# --- Node / Frontend (Qwik + Vite) ---
+**/node_modules/
+**/dist/
+**/.vite/
+**/.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Coverage / Reports ---
+**/coverage/
+
+# --- Rails (backend) ---
+backend/log/*
+backend/tmp/*
+backend/tmp/pids/*
+backend/tmp/cache/*
+backend/tmp/sockets/*
+backend/storage/*
+backend/public/assets
+backend/public/packs
+backend/.byebug_history
+backend/.bundle
+backend/vendor/bundle
+backend/.rspec_status
+backend/.yardoc
+backend/doc/
+
+# keep empty dirs tracked
+!backend/log/.keep
+!backend/tmp/.keep
+!backend/storage/.keep
+
+# --- Misc ---
+*.log

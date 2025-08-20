@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p><%= @reservation.user.name %> 様</p>
+    <p>以下のご予約はキャンセルされました。</p>
+    <ul>
+      <li>予約日時: <%= l @reservation.reservation_at, format: :long %></li>
+      <li>人数: <%= @reservation.people_count %> 名</li>
+      <li>コース: <%= @reservation.course.presence || 'なし' %></li>
+    </ul>
+  </body>
+</html>

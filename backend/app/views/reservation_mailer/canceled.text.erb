@@ -1,0 +1,7 @@
+<%= @reservation.user.name %> 様
+
+以下のご予約はキャンセルされました。
+
+予約日時: <%= l @reservation.reservation_at, format: :long %>
+人数: <%= @reservation.people_count %> 名
+コース: <%= @reservation.course.presence || 'なし' %>
